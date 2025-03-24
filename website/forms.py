@@ -1,7 +1,10 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from .models import Record
 
+
+#Register Form
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(label="", required=True, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email Address'}))
     first_name = forms.CharField(label="", required=True, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
@@ -33,3 +36,18 @@ class RegisterForm(UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'Password Confirmation'
         self.fields['password2'].label = ''
         self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'
+
+#Add Record Form
+class AddRecordForm(forms.ModelForm):
+    first_name = forms.CharField(label="", required=True, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
+    last_name = forms.CharField(label="", required=True, max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}))    
+    email = forms.EmailField(label="", required=True,max_length=100, widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email Address'}))     
+    phone = forms.CharField(label="", required=True, max_length=15, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone Number'}))
+    address = forms.CharField(label="", required=True,max_length=200, widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Address'}))
+    city = forms.CharField(label="", required=True, max_length=50, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'City'}))
+    state = forms.CharField(label="", required=True, max_length=50, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'State'}))
+    zip_code = forms.CharField(label="", required=True, max_length=20, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Zipcode'}))
+
+    class Meta:
+        model = Record
+        exclude = ["user",]
